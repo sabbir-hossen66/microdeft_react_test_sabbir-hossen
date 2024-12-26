@@ -1,19 +1,20 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import Lottie from 'lottie-react';
 import registerAnimation from '../../assets/Animation - 1717610757831.json'
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
-
+import useAxiosPublic from '../../hooks/useAxiosPublic';
+import Swal from 'sweetalert2';
+import { AuthContext } from '../../Providers/AuthProviders';
 
 
 const Register = () => {
-
-
+  const axiosPublic = useAxiosPublic()
+  const { createUser, updatePRf } = useContext(AuthContext)
   const navigate = useNavigate()
   const [showPassword, setShowPassword] = useState(false)
-
   const {
     register,
     handleSubmit,
@@ -22,11 +23,45 @@ const Register = () => {
   } = useForm()
 
   const onSubmit = (data) => {
-    console.log('helllo');
+    console.log(data);
+    createUser(data.email, data.password, data.name)
+      .then(result => {
+        const loggedUser = result.user;
+        console.log(loggedUser);
+        updatePRf(data.name, data.photoURL)
+          .then(() => {
+            console.log('user profile updated');
+            // use axiospublic
+            const userInfo = {
+              name: data.name,
+              email: data.email,
+              url: data.photoURL
+            }
+            axiosPublic.post('', userInfo)
+              .then(res => {
+                if (res.data.insertedId) {
+                  reset();
+                  Swal.fire({
+                    position: "top-end",
+                    icon: "success",
+                    title: "Successfully Sign UP",
+                    showConfirmButton: false,
+                    timer: 1500
+                  });
+                }
+              })
 
+
+          })
+        navigate('/login')
+      })
+      .catch(error => {
+        console.log(error.message);
+      })
 
 
   }
+
 
 
   return (
