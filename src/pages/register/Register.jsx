@@ -12,7 +12,7 @@ import { AuthContext } from '../../Providers/AuthProviders';
 
 const Register = () => {
   const axiosPublic = useAxiosPublic()
-  const { createUser, updatePRf } = useContext(AuthContext)
+  const { createUser } = useContext(AuthContext)
   const navigate = useNavigate()
   const [showPassword, setShowPassword] = useState(false)
   const {
@@ -37,7 +37,7 @@ const Register = () => {
               email: data.email,
               url: data.photoURL
             }
-            axiosPublic.post('', userInfo)
+            axiosPublic.post('/api/register', userInfo)
               .then(res => {
                 if (res.data.insertedId) {
                   reset();
