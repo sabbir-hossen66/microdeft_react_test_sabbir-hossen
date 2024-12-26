@@ -1,133 +1,145 @@
-import React, { useContext, useState } from 'react';
-import Lottie from 'lottie-react';
+import React, { useState } from 'react';
+import axios from 'axios';
 import registerAnimation from '../../assets/Animation - 1717610757831.json'
-import { useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
-import { FaEye, FaEyeSlash } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
-import useAxiosPublic from '../../hooks/useAxiosPublic';
 import Swal from 'sweetalert2';
-import { AuthContext } from '../../Providers/AuthProviders';
-
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import { Link, useNavigate } from 'react-router-dom';
+import Lottie from 'lottie-react';
 
 const Register = () => {
-  const axiosPublic = useAxiosPublic()
-  const { createUser } = useContext(AuthContext)
-  const navigate = useNavigate()
-  const [showPassword, setShowPassword] = useState(false)
-  const {
-    register,
-    handleSubmit,
-    reset,
-    formState: { errors },
-  } = useForm()
+  const [formData, setFormData] = useState({ name: '', email: '', password: '', photoURL: '' });
+  const [showPassword, setShowPassword] = useState(false);
+  const [errors, setErrors] = useState({});
+  const navigate = useNavigate();
 
-  const onSubmit = (data) => {
-    console.log(data);
-    createUser(data.email, data.password, data.name)
-      .then(result => {
-        const loggedUser = result.user;
-        console.log(loggedUser);
-        updatePRf(data.name, data.photoURL)
-          .then(() => {
-            console.log('user profile updated');
-            // use axiospublic
-            const userInfo = {
-              name: data.name,
-              email: data.email,
-              url: data.photoURL
-            }
-            axiosPublic.post('/api/register', userInfo)
-              .then(res => {
-                if (res.data.insertedId) {
-                  reset();
-                  Swal.fire({
-                    position: "top-end",
-                    icon: "success",
-                    title: "Successfully Sign UP",
-                    showConfirmButton: false,
-                    timer: 1500
-                  });
-                }
-              })
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
 
-
-          })
-        navigate('/login')
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    axios
+      .post('https://react-interview.crd4lc.easypanel.host/api/register', formData)
+      .then((response) => {
+        console.log(response);
+        Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title: 'Successfully Signed Up',
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        setFormData({ name: '', email: '', password: '', photoURL: '' });
+        setErrors({});
+        navigate('/login');
       })
-      .catch(error => {
-        console.log(error.message);
-      })
-
-
-  }
-
-
+      .catch((error) => {
+        if (error.response && error.response.data.errors) {
+          setErrors(error.response.data.errors);
+        } else {
+          console.error('Error:', error.message);
+        }
+      });
+  };
 
   return (
-    <div>
-      <div className="flex flex-col lg:flex-row items-center justify-evenly min-h-screen bg-gray-100">
-        <Lottie className='hover:animate-spin' animationData={registerAnimation} />
-        <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md transform transition-all duration-500 hover:scale-105">
-          <h2 className="text-2xl font-bold mb-5 text-center">Register Please</h2>
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+
+    <div className="flex flex-col lg:flex-row items-center justify-evenly min-h-screen bg-gray-100">
+      <Lottie className='hover:animate-spin' animationData={registerAnimation} />
+
+      <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md transform transition-all duration-500 hover:scale-105">
+        <div className="bg-white p-8 rounded-lg w-full max-w-md">
+          <h2 className="text-2xl font-bold mb-6 text-center">Register</h2>
+          <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label htmlFor="username" className="block mb-2 text-sm font-medium text-gray-700">Username</label>
-              <input type="text" {...register("name", { required: true })} id="name" className="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-300 ease-in-out" />
-              {errors.name && <span className='text-red-500'>Please fill up this field</span>}
-            </div>
-            <div>
-              <label htmlFor="photoURl" className="block mb-2 text-sm font-medium text-gray-700">Photo URL</label>
-              <input type="text" {...register("photoURL", { required: true })} id="photoURL" className="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-300 ease-in-out" />
-              {errors.photoURL && <span className='text-red-500'>Please fill up this field</span>}
-            </div>
-            <div>
-              <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-700">Email</label>
-              <input type="email" {...register("email", { required: true })} id="email" className="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-300 ease-in-out" />
-              {errors.email && <span className='text-red-500'>Please fill up this field</span>}
+              <label htmlFor="name" className="block text-sm font-medium text-gray-700">
+                Name
+              </label>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+                className="w-full p-2 border rounded focus:ring-2 focus:ring-blue-400"
+                required
+              />
+              {errors.name && <p className="text-red-500 text-sm">{errors.name[0]}</p>}
             </div>
 
             <div>
-              <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-700">Password</label>
-              <div className='relative'>
-                <input type={showPassword ? "text" : "password"} {...register("password", {
-                  required: true,
-                  minLength: 6,
-                  maxLength: 15,
-                  // pattern: /^[^A-Z0-9!@#$%^&*(),.?":{}|<>]+$/
-                  pattern: /^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*(),.?":{}|<>])[A-Za-z0-9!@#$%^&*(),.?":{}|<>]+$/
-                })} id="password" className="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-300 ease-in-out" />
-                <span className='absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer' onClick={() => setShowPassword(!showPassword)} >
-                  {
-                    showPassword ? <FaEyeSlash /> : <FaEye />
-                  }
+              <label htmlFor="photoURL" className="block text-sm font-medium text-gray-700">
+                Photo URL
+              </label>
+              <input
+                type="text"
+                id="photoURL"
+                name="photoURL"
+                value={formData.photoURL}
+                onChange={handleChange}
+                className="w-full p-2 border rounded focus:ring-2 focus:ring-blue-400"
+                required
+              />
+              {errors.photoURL && <p className="text-red-500 text-sm">{errors.photoURL[0]}</p>}
+            </div>
+
+            <div>
+              <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+                Email
+              </label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                className="w-full p-2 border rounded focus:ring-2 focus:ring-blue-400"
+                required
+              />
+              {errors.email && <p className="text-red-500 text-sm">{errors.email[0]}</p>}
+            </div>
+
+            <div>
+              <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+                Password
+              </label>
+              <div className="relative">
+                <input
+                  type={showPassword ? 'text' : 'password'}
+                  id="password"
+                  name="password"
+                  value={formData.password}
+                  onChange={handleChange}
+                  className="w-full p-2 border rounded focus:ring-2 focus:ring-blue-400"
+                  required
+                />
+                <span
+                  className="absolute inset-y-0 right-2 flex items-center cursor-pointer"
+                  onClick={() => setShowPassword(!showPassword)}
+                >
+                  {showPassword ? <FaEyeSlash /> : <FaEye />}
                 </span>
               </div>
-
-              {errors.password?.type === "minLength" && (
-                <p className='text-red-500'>password must be 6 characters</p>
-              )}
-              {errors.password?.type === "maxLength" && (
-                <p className='text-red-500'>password must be less than 15 characters</p>
-              )}
-              {errors.password?.type === "pattern" && (
-                <p className='text-red-500'>Password must have be a capital letters, numbers, or special characters.</p>
-              )}
+              {errors.password && <p className="text-red-500 text-sm">{errors.password[0]}</p>}
             </div>
 
-            <input className="w-full cursor-pointer bg-[#27A3FA] text-white p-3 rounded-lg shadow-lg hover:bg-[#2784F5] focus:outline-none focus:ring-2 focus:ring-[#27A3FA] focus:ring-opacity-50 transition duration-300 ease-in-out" type="submit" value="Register" />
-
+            <button
+              type="submit"
+              className="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600 transition duration-200"
+            >
+              Register
+            </button>
           </form>
-          <div className="mt-6 text-center text-sm text-gray-600" >
-            Already Have an Account?{' '}
-            <a href="#" className="font-medium text-[#27A3FA] hover:text-[#2784F5]">
-              <Link to={'/login'}> Login </Link>
-            </a>
-          </div>
+          <p className="text-center mt-4 text-sm text-gray-600">
+            Already have an account?{' '}
+            <Link to="/login" className="text-blue-500 hover:underline">
+              Login
+            </Link>
+          </p>
         </div>
       </div>
     </div>
-
   );
 };
 
