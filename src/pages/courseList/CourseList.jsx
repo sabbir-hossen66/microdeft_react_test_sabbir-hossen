@@ -32,8 +32,6 @@ const CourseList = () => {
 
   return (
     <div>
-      <p>name:</p>
-      <h3>hello</h3>
       <div className='display'>
         {
 
