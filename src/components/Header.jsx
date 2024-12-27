@@ -8,12 +8,12 @@ const Header = () => {
         {/* Logo and Site Name */}
         <div className="flex items-center space-x-3 mb-4 md:mb-0">
           <img
-            src="https://via.placeholder.com/50"
+            src="https://i.ibb.co.com/zxtvcZ5/logo.webp"
             alt="Logo"
             className="w-10 h-10 rounded-full"
           />
           <h1 className="text-black text-xl md:text-2xl font-bold">
-            Front Project
+            Course
           </h1>
         </div>
 
