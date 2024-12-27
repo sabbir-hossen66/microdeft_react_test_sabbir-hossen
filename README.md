@@ -57,20 +57,7 @@ Tailwind CSS is used for clean, responsive, and modern design.
 Animations are added for smooth transitions between pages.
 
 
-Project Structure:
 
-
-├── src/
-│   ├── assets/             # Static assets (images, fonts, etc.)
-│   ├── components/         # Reusable components
-│   ├── pages/              # Pages (Login, Registration, Course List, etc.)
-│   ├── App.js              # Main component with routing
-│   ├── index.js            # Entry point
-│   ├── tailwind.config.js  # Tailwind CSS configuration
-├── public/                 # Public folder (index.html, etc.)
-├── package.json            # Project dependencies and scripts
-└── README.md               # Project documentation
-Usage:
 Home Page:
 
 Displays a list of courses with pagination (8 items per page).
