@@ -18,7 +18,8 @@ const Login = () => {
     axios
       .post('https://react-interview.crd4lc.easypanel.host/api/login', formData)
       .then((response) => {
-        const token = response.data.token;
+        const token = response.data.data.token;
+        console.log(response)
         Swal.fire({
           position: 'top-end',
           icon: 'success',

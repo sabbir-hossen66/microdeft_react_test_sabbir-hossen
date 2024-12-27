@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 
 const Course = () => {
+  const [token, setToken] = useState('');
   const [formData, setFormData] = useState({
     title: '',
     description: '',
@@ -20,6 +21,8 @@ const Course = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    const setToken = localStorage.getItem('token');
+
     axios
       .post(
         'https://react-interview.crd4lc.easypanel.host/api/course',
@@ -27,12 +30,13 @@ const Course = () => {
         {
           headers: {
             'Content-Type': 'application/json',
-            Authorization: '',
+            Authorization: `Bearer ${setToken}`,
           },
         }
       )
       .then((response) => {
-        setMessage(`Course added successfully: ${response.data}`);
+
+        setMessage(` ${response.data.status_message}`);
         setFormData({
           title: '',
           description: '',
