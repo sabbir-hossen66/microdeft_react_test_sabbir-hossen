@@ -28,18 +28,17 @@ This is a React-based web application that features a variety of functionalities
    git clone https://github.com/yourusername/microdeft-frontend.git
 Navigate into the project directory:
 
-bash
-Copy code
+
 cd microdeft-frontend
 Install the dependencies:
 
-bash
-Copy code
+
+
 npm install
 Run the application locally:
 
-bash
-Copy code
+
+
 npm start
 Open your browser and visit http://localhost:3000 to see the app in action.
 
@@ -56,9 +55,11 @@ Clicking a page number will load the corresponding set of courses.
 4. UI Design:
 Tailwind CSS is used for clean, responsive, and modern design.
 Animations are added for smooth transitions between pages.
+
+
 Project Structure:
-php
-Copy code
+
+
 ├── src/
 │   ├── assets/             # Static assets (images, fonts, etc.)
 │   ├── components/         # Reusable components
