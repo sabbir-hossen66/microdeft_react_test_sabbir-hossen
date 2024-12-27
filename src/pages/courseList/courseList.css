@@ -108,16 +108,45 @@ body {
   font-size: 16px;
 }
 
-.go-home-button:hover {
+
+.pagination-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10rem;
+}
+
+.pagination {
+  list-style-type: none;
+  display: flex;
+}
+
+.page-item {
+  margin: 0 5px;
+}
+
+.page-link {
+  padding: 10px 15px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.page-link:hover {
   background-color: #0056b3;
 }
 
-
+.page-item.active .page-link {
+  background-color: #0056b3;
+  font-weight: bold;
+}
 
 
 /* Responsive Adjustments */
 
-/* Large screens (4 cards per row) */
+/* Large screens */
 @media (min-width: 1024px) {
   .course-card {
     flex: 1 1 calc(25% - 20px);
@@ -125,26 +154,26 @@ body {
   }
 }
 
-/* Medium screens (2-3 cards per row) */
+/* Medium screens*/
 @media (min-width: 768px) and (max-width: 1023px) {
   .course-card {
-    flex: 1 1 calc(33.33% - 20px); /* 3 cards per row */
+    flex: 1 1 calc(33.33% - 20px); 
     max-width: calc(33.33% - 20px);
   }
 }
 
-/* Small screens (2 cards per row) */
+/* Small screens*/
 @media (min-width: 480px) and (max-width: 767px) {
   .course-card {
-    flex: 1 1 calc(50% - 20px); /* 2 cards per row */
+    flex: 1 1 calc(50% - 20px);
     max-width: calc(50% - 20px);
   }
 }
 
-/* Extra small screens (1 card per row) */
+/* Extra small screens */
 @media (max-width: 479px) {
   .course-card {
-    flex: 1 1 100%; /* Full width */
+    flex: 1 1 100%; 
     max-width: 100%;
   }
 }

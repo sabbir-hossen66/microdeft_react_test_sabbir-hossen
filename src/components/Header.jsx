@@ -5,7 +5,6 @@ const Header = () => {
   return (
     <header className="p-4 shadow-md bg-gray-50">
       <div className="container mx-auto flex justify-between items-center flex-wrap">
-        {/* Logo and Site Name */}
         <div className="flex items-center space-x-3 mb-4 md:mb-0">
           <img
             src="https://i.ibb.co.com/zxtvcZ5/logo.webp"
@@ -17,7 +16,6 @@ const Header = () => {
           </h1>
         </div>
 
-        {/* Navigation Links */}
         <div className="w-full md:w-auto">
           <ul className="flex flex-col md:flex-row items-center space-y-2 md:space-y-0 md:space-x-4">
             <li>
@@ -39,7 +37,6 @@ const Header = () => {
           </ul>
         </div>
 
-        {/* Buttons */}
         <div className="flex items-center space-x-2 md:space-x-4">
           <Link to="/login">
             <button className="relative px-5 py-1 border-2 border-black hover:text-white hover:border-none bg-white border-solid-6 text-black font-semibold rounded  overflow-hidden group">
