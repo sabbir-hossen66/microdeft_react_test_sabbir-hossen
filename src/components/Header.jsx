@@ -17,7 +17,16 @@ const Header = () => {
               Front Project
             </h1>
           </div>
-
+          <div>
+            <ul className="flex items-center space-x-4">
+              <li>
+                <Link to="/">Home</Link>
+              </li>
+              <li>
+                <Link to="/course-list">CourseList</Link>
+              </li>
+            </ul>
+          </div>
           {/* Buttons */}
           <div className="flex items-center space-x-4">
 

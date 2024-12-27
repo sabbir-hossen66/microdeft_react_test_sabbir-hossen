@@ -7,6 +7,8 @@ import Error from "../pages/error/Error";
 import LandingPage from "../pages/landingPage/LandingPage";
 import Register from "../pages/register/Register";
 import Login from "../pages/login/Login";
+import CourseList from "../pages/courseList/CourseList";
+
 
 export const router = createBrowserRouter([
   {
@@ -25,6 +27,11 @@ export const router = createBrowserRouter([
       {
         path: "/login",
         element: <Login />,
+      },
+      {
+        path: "/course-list",
+        element: <CourseList />,
+        // loader: () => fetch('https://react-interview.crd4lc.easypanel.host/api/course')
       }
     ],
   },

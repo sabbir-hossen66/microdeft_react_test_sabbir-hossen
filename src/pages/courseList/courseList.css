@@ -1,0 +1,128 @@
+/* Basic Reset */
+body {
+  margin: 20px;
+  padding: 10px;
+  font-family: Arial, sans-serif;
+}
+
+/* Page Container */
+.display{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+/* Card Container */
+.course-card {
+  /* width: 300px; */
+  /* margin: 20px auto; */
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  background-color: #fff;
+
+   flex: 1 1 calc(25% - 20px); /* Ensure 4 cards fit in a row */
+  box-sizing: border-box; /* Include padding and border in size calculation */
+  max-width: calc(25% - 20px); /* Prevent cards from exceeding 25% of the row width */
+  margin: 10px 0; /* Space between rows */
+
+
+}
+
+.course-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Course Image */
+.course-image {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+/* Content Section */
+.course-content {
+  padding: 15px;
+}
+
+/* Title */
+.course-title {
+  font-size: 1.5rem;
+  color: #333;
+  margin: 0 0 10px;
+}
+
+/* Description */
+.course-description {
+  font-size: 0.9rem;
+  color: #666;
+  margin-bottom: 15px;
+  line-height: 1.4;
+}
+
+/* Badge and Instructor */
+.course-details {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.course-badge {
+  font-size: 0.8rem;
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 5px;
+  text-transform: uppercase;
+}
+
+.course-instructor {
+  font-size: 0.85rem;
+  color: #444;
+}
+
+/* Date */
+.course-date {
+  font-size: 0.75rem;
+  color: #888;
+  text-align: right;
+}
+
+
+
+/* Responsive Adjustments */
+
+/* Large screens (4 cards per row) */
+@media (min-width: 1024px) {
+  .course-card {
+    flex: 1 1 calc(25% - 20px);
+    max-width: calc(25% - 20px);
+  }
+}
+
+/* Medium screens (2-3 cards per row) */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .course-card {
+    flex: 1 1 calc(33.33% - 20px); /* 3 cards per row */
+    max-width: calc(33.33% - 20px);
+  }
+}
+
+/* Small screens (2 cards per row) */
+@media (min-width: 480px) and (max-width: 767px) {
+  .course-card {
+    flex: 1 1 calc(50% - 20px); /* 2 cards per row */
+    max-width: calc(50% - 20px);
+  }
+}
+
+/* Extra small screens (1 card per row) */
+@media (max-width: 479px) {
+  .course-card {
+    flex: 1 1 100%; /* Full width */
+    max-width: 100%;
+  }
+}
